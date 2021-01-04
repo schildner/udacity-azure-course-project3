@@ -1,8 +1,9 @@
 # Azure subscription vars
-subscription_id = "707a2a01-f589-4fbf-8753-b278612b58ef"
-client_id = ""
-client_secret = ""
-tenant_id = ""
+#subscription_id = "707a2a01-f589-4fbf-8753-b278612b58ef"
+# Omiting values as these were provided via alternative way - env variables
+#client_id = ""
+#client_secret = ""
+#tenant_id = ""
 
 # Resource Group/Location
 location = "West Europe"
