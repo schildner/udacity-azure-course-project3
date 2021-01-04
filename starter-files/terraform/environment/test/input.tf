@@ -20,9 +20,10 @@ variable virtual_network_name {
 
 }
 variable address_prefix_test {
-  
+  description = "The address prefix."
 }
 variable address_space {
-
+  description = "List of address spaces."
+  type    = list(string)
 }
 
