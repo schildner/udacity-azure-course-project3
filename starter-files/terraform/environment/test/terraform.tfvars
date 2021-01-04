@@ -1,13 +1,13 @@
 # Azure subscription vars
-subscription_id = ""
+subscription_id = "707a2a01-f589-4fbf-8753-b278612b58ef"
 client_id = ""
 client_secret = ""
 tenant_id = ""
 
 # Resource Group/Location
-location = ""
-resource_group = ""
-application_type = ""
+location = "West Europe"
+resource_group = "udacity-azure-course-project3-test-rg"
+application_type = "udacity-azure-course-project3-test-app"
 
 # Network
 virtual_network_name = ""
