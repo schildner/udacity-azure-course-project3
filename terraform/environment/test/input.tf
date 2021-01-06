@@ -27,3 +27,22 @@ variable address_space {
   type    = list(string)
 }
 
+# VM
+variable "username" {
+  description = "The VM users name."
+  default = "eduard"
+}
+
+variable "password" {
+  description = "The VM users password:"
+  sensitive = true
+}
+
+variable "number_of_vms" {
+  description = "The number of Virtual Machines to be deployed."
+  type        = number
+}
+
+variable "packer_image" {
+  description = "The ID of the image created by packer tool."
+}

@@ -53,3 +53,13 @@ module "publicip" {
   resource_type    = "publicip"
   resource_group   = module.resource_group.resource_group_name
 }
+
+module "vm" {
+  source           = "../../modules/vm"
+  count            = var.number_of_vms
+  location         = var.location
+  resource_group   = module.resource_group.resource_group_name
+  resource_type    = "vm"
+  
+
+}

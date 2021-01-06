@@ -14,3 +14,9 @@ application_type = "udacity-azure-course-project3-test-app"
 virtual_network_name = "vn-project3"
 address_space = ["10.5.0.0/16"]
 address_prefix_test = "10.5.1.0/24"
+
+# VM
+packer_image = "/subscriptions/707a2a01-f589-4fbf-8753-b278612b58ef/resourceGroups/udacity-azure-course-project1-iac-rg/providers/Microsoft.Compute/images/Ubuntu1804Image"
+number_of_vms = 2
+password = "HardToGuess123!"
+username = "eduard"
