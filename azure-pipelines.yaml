@@ -1,6 +1,11 @@
 name: Azure Pipelines
 variables:
+  # Python version: 3.7.6
   python.version: '3.7.6'
+  # Web app name
+  webAppName: 'udacity-azure-course-project3-qa-webapp'
+  # Project root folder. Point to the folder containing manage.py file.
+  projectRoot: $(System.DefaultWorkingDirectory)
 stages:
 - stage: Build
   jobs:
@@ -9,11 +14,11 @@ stages:
       name: Hosted Ubuntu 1604
     steps:
     # Needed for Terraform VM deployment
-    # - task: InstallSSHKey@0
-    #   inputs:
-    #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
-    #     sshPublicKey: 'PUBLIC_KEY'
-    #     sshKeySecureFile: 'id_rsa'
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: 'KNOWN_HOSTS_STRING'
+        sshPublicKey: 'PUBLIC_KEY'
+        sshKeySecureFile: 'id_rsa'
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
@@ -37,31 +42,29 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
-              azureSubscription: ''
-              appName: ''
+              azureSubscription: 'Free Trial (707a2a01-f589-4fbf-8753-b278612b58ef)'
+              appName: $(webAppName)
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  # - deployment: VMDeploy
-  #   displayName: NAME
-  #   environment:
-  #     name:  ENVIRONMENT NAME
-  #     resourceType: VirtualMachine
-  #     tags: TAG NAME
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - task: Bash@3
-  #           inputs:
-  #             targetType: 'inline'
-  #             script: |
-  #               #! /bin/bash
-                
-  #               sudo apt-get upgrade -y
-  #               sudo apt-get install python3-pip -y
-  #               sudo apt-get install unzip -y
-  #               sudo apt-get install -y chromium-browser
-  #               pip3 install selenium
-  #               export PATH=$PATH:some/path
-
-
+  - deployment: VMDeploy
+    displayName: NAME
+    environment:
+      name:  'TEST'
+      resourceType: VirtualMachine
+      tags: TAG NAME
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+              
+                sudo apt-get upgrade -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                pip3 install selenium
+                export PATH=$PATH:some/path
