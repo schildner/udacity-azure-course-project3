@@ -1,6 +1,6 @@
 # Overview
 
-This is a final project submission for [Udacity Azure DevOps Course](https://www.udacity.com/course/devops-engineer-for-microsoft-azure-nanodegree--nd082): Ensuring Quality Releases.
+This is a final project ~~submission~~ (work in progress) for [Udacity Azure DevOps Course](https://www.udacity.com/course/devops-engineer-for-microsoft-azure-nanodegree--nd082): Ensuring Quality Releases.
 
 # Project Specifications
 
