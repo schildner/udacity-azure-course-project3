@@ -29,7 +29,6 @@ module "network" {
   resource_group       = module.resource_group.resource_group_name
   address_prefix_test  = var.address_prefix_test
 }
-
 module "nsg-test" {
   source           = "../../modules/networksecuritygroup"
   location         = var.location
@@ -55,11 +54,14 @@ module "publicip" {
 }
 
 module "vm" {
-  source           = "../../modules/vm"
-  count            = var.number_of_vms
-  location         = var.location
-  resource_group   = module.resource_group.resource_group_name
-  resource_type    = "vm"
-  
+  source               = "../../modules/vm"
+  number_of_vms        = var.number_of_vms
+  location             = var.location
+  resource_group       = module.resource_group.resource_group_name
+  resource_type        = "vm"
 
+  subnet_id_test       = module.network.subnet_id_test
+  instance_ids         = module.publicip.public_ip_address_id
+  username             = var.username
+  password             = var.password
 }
