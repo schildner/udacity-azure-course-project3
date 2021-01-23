@@ -15,6 +15,17 @@ Create the following resources for a specific environment tier:
 - Resource Group
 - Linux VM (created by you -- use a Standard_B1s size for lowest cost)
 
+Instructions:
+
+- Navigate to the environment / test directory, then run terraform init, plan, apply.
+
+```bash
+cd terraform/environment/test
+terraform init
+terraform plan
+terraform apply
+```
+
 ### 2. Azure DevOps CI/CD pipeline
 
 - Create the tasks that allow for Terraform to run and create the above resources.
