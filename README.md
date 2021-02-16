@@ -17,13 +17,38 @@ Create the following resources for a specific environment tier:
 
 Instructions:
 
+- Configure Authentication via Service Principal and Client Secret
+
+  Following [the guide](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret) we can set up the service principal allowing terraform to change resources in selected subscription scope.
+
+  Executing `az ad sp create-for-rbac` command as described in the guide above the following output gets printed on console.
+
+  ```bash
+
+  {
+    "appId": "00000000-0000-0000-0000-000000000000",
+    "displayName": "azure-cli-2017-06-05-10-41-15",
+    "name": "http://azure-cli-2017-06-05-10-41-15",
+    "password": "0000-0000-0000-0000-000000000000",
+    "tenant": "00000000-0000-0000-0000-000000000000"
+  }
+  ```
+
+  Then we need to export the following environment variables which are then read by terraform:
+
+  ```bash
+  export ARM_CLIENT_ID=<value corresponds to appId printed on console>
+  export ARM_CLIENT_SECRET=<value corresponds to password>
+  export ARM_TENANT_ID=<value corresponds to tenant>
+  ```
+
 - Navigate to the environment / test directory, then run terraform init, plan, apply.
 
 ```bash
 cd terraform/environment/test
 terraform init
-terraform plan
-terraform apply
+terraform plan -out solution.plan
+terraform apply "solution.plan"
 ```
 
 ### 2. Azure DevOps CI/CD pipeline
