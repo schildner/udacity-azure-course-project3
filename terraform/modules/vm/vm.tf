@@ -33,8 +33,8 @@ resource "azurerm_linux_virtual_machine" "main" {
   ]
 
   admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
+    username   = "eduard"
+    public_key = file("~/.ssh/authorized_keys/id_rsa.pub")
   }
 
   os_disk {
