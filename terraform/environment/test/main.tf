@@ -64,4 +64,5 @@ module "vm" {
   instance_ids         = module.publicip.public_ip_address_id
   username             = var.username
   password             = var.password
+  packer_image         = var.packer_image
 }

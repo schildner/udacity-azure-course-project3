@@ -7,3 +7,4 @@ variable "subnet_id_test" {}
 variable "instance_ids" {} 
 variable "username" {}
 variable "password" {}
+variable "packer_image" {}

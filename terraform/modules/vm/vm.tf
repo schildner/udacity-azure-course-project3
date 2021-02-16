@@ -24,7 +24,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   size                            = "Standard_B1s"
   admin_username                  = var.username
   #admin_password                  = var.password
-  #source_image_id                 = var.packer_image
+  source_image_id                 = var.packer_image
   #disable_password_authentication = false
   
   network_interface_ids = [
@@ -33,7 +33,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   ]
 
   admin_ssh_key {
-    username   = "eduard"
+    username   = "adminuser"
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
@@ -42,12 +42,13 @@ resource "azurerm_linux_virtual_machine" "main" {
     caching              = "ReadWrite"
   }
 
-  source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
+  # only possible if source_image_id is not defined. its an either/or.
+  #source_image_reference {
+  #  publisher = "Canonical"
+  #  offer     = "UbuntuServer"
+  #  sku       = "18.04-LTS"
+  #  version   = "latest"
+  #}
 
   tags = {
     project_name = "QA"
@@ -72,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 #  }
 #
 #  os_disk {
-#    caching           = "ReadWrite"
+#    caching              = "ReadWrite"
 #    storage_account_type = "Standard_LRS"
 #  }
 #
