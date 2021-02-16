@@ -23,7 +23,6 @@ stages:
   jobs:
   - job: Build
     pool:
-      name: Self made Ubuntu 1804
       vmImage: $(vmImageName)
     steps:
     # Needed for Terraform VM deployment
