@@ -1,17 +1,30 @@
 name: Azure Pipelines
 variables:
+  # Azure Resource Manager service connection for pipelines
+  azureServiceConnectionId: '02cc2bd2-9ade-452a-94a7-4052dfd43b29'
+
   # Python version: 3.7.6
   python.version: '3.7.6'
+
+  # Agent VM image name
+  vmImageName: 'myPackerImage'
+
   # Web app name
-  webAppName: 'udacity-azure-course-project3-qa-webapp'
+  webAppName: 'udacity-azure-course-project3-test-app-AppService'
+
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
+
+  # Environment name
+  environmentName: 'test'
+
 stages:
 - stage: Build
   jobs:
   - job: Build
     pool:
-      name: Hosted Ubuntu 1604
+      name: Self made Ubuntu 1804
+      vmImage: $(vmImageName)
     steps:
     # Needed for Terraform VM deployment
     - task: InstallSSHKey@0
@@ -19,6 +32,7 @@ stages:
         knownHostsEntry: 'KNOWN_HOSTS_STRING'
         sshPublicKey: 'PUBLIC_KEY'
         sshKeySecureFile: 'id_rsa'
+        
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
@@ -29,11 +43,12 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
-- stage:
+
+- stage: Deploy
   jobs:
   - deployment: FakeRestAPI
     pool:
-      vmImage: 'Ubuntu-16.04'
+      vmImage: $(vmImageName)
     environment: 'TEST'
     strategy:
       runOnce:
@@ -45,6 +60,7 @@ stages:
               script: |
                 terraform init
                 terraform apply
+
           - task: AzureWebApp@1
             displayName: 'Deploy Azure Web App'
             inputs:
@@ -52,8 +68,9 @@ stages:
               appName: $(webAppName)
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+
   - deployment: VMDeploy
-    displayName: NAME
+    displayName: 'Deploy VM'
     environment:
       name:  'TEST'
       resourceType: VirtualMachine
@@ -62,6 +79,7 @@ stages:
       runOnce:
         deploy:
           steps:
+
           - task: Bash@3
             inputs:
               targetType: 'inline'
