@@ -57,6 +57,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
+                cd terraform/environment/test
                 terraform init
                 terraform apply
 
