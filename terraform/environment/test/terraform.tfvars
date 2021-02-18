@@ -20,3 +20,9 @@ packer_image = "/subscriptions/707a2a01-f589-4fbf-8753-b278612b58ef/resourceGrou
 number_of_vms = 2 #TODO: not yet used
 password = "HardToGuess123!"
 username = "eduard"
+
+# public key in azure pipelines
+#public_key_path = "id_rsa.pub"
+
+# public key on local machine
+public_key_path = "~/.ssh/authorized_keys/id_rsa.pub"

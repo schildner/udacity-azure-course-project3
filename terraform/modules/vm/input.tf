@@ -8,3 +8,4 @@ variable "instance_ids" {}
 variable "username" {}
 variable "password" {}
 variable "packer_image" {}
+variable "public_key_path" {}

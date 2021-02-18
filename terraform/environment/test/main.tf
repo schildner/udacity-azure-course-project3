@@ -65,4 +65,5 @@ module "vm" {
   username             = var.username
   password             = var.password
   packer_image         = var.packer_image
+  public_key_path      = var.public_key_path
 }
