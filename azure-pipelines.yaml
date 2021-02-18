@@ -42,7 +42,7 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
         backendServiceArm: 'anja-subscription-service-connection'
-        backendAzureRmResourceGroupName: 'udacity-azure-course-project3-test-rg'
+        backendAzureRmResourceGroupName: 'tstate'
         backendAzureRmStorageAccountName: 'tstate19841'
         backendAzureRmContainerName: 'tstate'
         backendAzureRmKey: 'terraform-project3.tfstate'
@@ -54,7 +54,13 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
         #commandOptions: 'addargs'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
-
+    - task: TerraformTaskV1@0
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
+        #commandOptions: 'addargs'
+        environmentServiceNameAzureRM: 'anja-subscription-service-connection'
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
