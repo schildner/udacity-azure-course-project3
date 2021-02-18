@@ -31,7 +31,10 @@ stages:
         knownHostsEntry: 'AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDa8okYFnpl84XcFtz9/4zBoIN8KHJzJW4hZGer+SbYgOwBqPU+lW0NXaFfrqtnpPWqp6+76X1vvTrLPDr6HyEiuOPAYb9yq+rdxTlWtYC2UuItQu3qvTWAuaW0FxYcd6Va7F6y9AnBSb9ucbTA00a0C1y50S1uanFCSXIPyq84EBOyWeMJRZZUQS81ERxmbyi3c5bz5egTdOBgyQ03GoXXGteRK0t9r4vm5aoU1J+hfhU+QVrgYZfnOHDKVYeTUeMuqcPgUV7yMXKsA6lH7/9iSWMD8LZFYwscdNVj9UgLh5vcN1NquPa7TEd8zuKMMXcWr42SAU+0bSnvMHVD0/+Po+d9KPl/SVgcv4uAcHwSXKNIIiB78bYBsCV2o/dKfmvPk8jGsVGbRcRZ68USBY2LkaIvN4MG4rXG3lerMfqVL+SIJv0wJ8nyoSrZTQDk6BlUfxolO4QumOD9+t+S4ugj0sotL1bIdSe2hh4M6MjHqttNIwxPlGFwsJZsDaI+zL8= edu@Eduards-MBP.fritz.box'
         sshKeySecureFile: 'id_rsa'
-
+    - task: DownloadSecureFile@1
+      inputs:
+        secureFile: 'id_rsa'
+        
     - task: TerraformInstaller@0
       inputs:
         terraformVersion: '0.14.7'
@@ -52,14 +55,14 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=/home/vsts/work/_temp/id_rsa"'
+        commandOptions: '-var "public_key_path=$(id_rsa.secureFilePath)"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
     - task: TerraformTaskV1@0
       inputs:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=/home/vsts/work/_temp/id_rsa"'
+        commandOptions: '-var "public_key_path=$(id_rsa.secureFilePath)"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
