@@ -52,14 +52,14 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=id_rsa.pub"'
+        commandOptions: '-var "public_key_path=/home/vsts/work/_temp/id_rsa"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
     - task: TerraformTaskV1@0
       inputs:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=id_rsa.pub"'
+        commandOptions: '-var "public_key_path=/home/vsts/work/_temp/id_rsa"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
