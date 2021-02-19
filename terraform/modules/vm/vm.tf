@@ -22,7 +22,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   location                        = var.location
   resource_group_name             = var.resource_group
   size                            = "Standard_B1s"
-  admin_username                  = var.username
+  admin_username                  = var.admin_username
   source_image_id                 = var.packer_image
   disable_password_authentication = true
   
@@ -32,8 +32,8 @@ resource "azurerm_linux_virtual_machine" "main" {
   ]
 
   admin_ssh_key {
-    username   = var.username
-    public_key = file(var.public_key_path)
+    username       = var.admin_username
+    public_key     = file(var.public_key_path)
   }
 
   os_disk {

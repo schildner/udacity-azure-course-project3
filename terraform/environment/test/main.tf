@@ -60,10 +60,9 @@ module "vm" {
   resource_group       = module.resource_group.resource_group_name
   resource_type        = "vm"
 
+  admin_username       = var.admin_username
   subnet_id_test       = module.network.subnet_id_test
   instance_ids         = module.publicip.public_ip_address_id
-  username             = var.username
-  password             = var.password
   packer_image         = var.packer_image
   public_key_path      = var.public_key_path
 }

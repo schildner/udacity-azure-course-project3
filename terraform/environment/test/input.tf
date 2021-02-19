@@ -28,14 +28,9 @@ variable address_space {
 }
 
 # VM
-variable "username" {
-  description = "The VM users name."
+variable "admin_username" {
+  description = "The admin user name in the VM."
   default = "eduard"
-}
-
-variable "password" {
-  description = "The VM users password:"
-  sensitive = true
 }
 
 variable "number_of_vms" {
