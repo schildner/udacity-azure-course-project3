@@ -61,7 +61,7 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)" -out solution.plan'
+        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)" -out "solution.plan"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
 
     - task: TerraformTaskV1@0
