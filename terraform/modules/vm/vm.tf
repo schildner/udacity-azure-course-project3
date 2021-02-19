@@ -19,13 +19,12 @@ resource "azurerm_linux_virtual_machine" "main" {
   #name                            = "vm-${count.index}"
   
   name                            = "vm0"
-  resource_group_name             = var.resource_group
   location                        = var.location
+  resource_group_name             = var.resource_group
   size                            = "Standard_B1s"
   admin_username                  = var.username
-  #admin_password                  = var.password
   source_image_id                 = var.packer_image
-  #disable_password_authentication = false
+  disable_password_authentication = true
   
   network_interface_ids = [
     #element(azurerm_network_interface.test.*.id, count.index)
@@ -33,7 +32,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   ]
 
   admin_ssh_key {
-    username   = "eduard"
+    username   = var.username
     public_key = file(var.public_key_path)
   }
 
@@ -51,36 +50,8 @@ resource "azurerm_linux_virtual_machine" "main" {
   #}
 
   tags = {
+    environment  = "test"
     project_name = "QA"
     stage        = "Submission"
   }
 }
-
-#resource "azurerm_linux_virtual_machine" "test" {
-#  name                = "ubuntu1604vm"
-#  count               = var.number_of_vms
-#  location            = var.location
-#  resource_group_name = var.resource_group
-#  size                = "Standard_B1s"
-#  admin_username      = var.username
-#  
-#  network_interface_ids = [
-#    element(azurerm_network_interface.test.*.id, count.index)
-#  ]
-#  admin_ssh_key {
-#    username   = "eduard"
-#    public_key = file("~/.ssh/id_rsa.pub")
-#  }
-#
-#  os_disk {
-#    caching              = "ReadWrite"
-#    storage_account_type = "Standard_LRS"
-#  }
-#
-#  source_image_reference {
-#    publisher = "Canonical"
-#    offer     = "UbuntuServer"
-#    sku       = "16.04-LTS"
-#    version   = "latest"
-#  }
-#}
