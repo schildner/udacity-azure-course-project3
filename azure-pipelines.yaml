@@ -26,6 +26,8 @@ stages:
       vmImage: ubuntu-20.04
     steps:
 
+    # TODO: Execute test suite for Postman  
+
     # Needed for Terraform VM deployment
     - task: InstallSSHKey@0
       inputs:
@@ -59,7 +61,7 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)"'
+        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)" -out solution.plan'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
 
     - task: TerraformTaskV1@0
@@ -67,7 +69,7 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)"'
+        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)" "solution.plan"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
 
     - task: ArchiveFiles@2
@@ -99,6 +101,7 @@ stages:
               appName: $(webAppName)
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+          # TODO: Execute test suite for JMeter
 
   - deployment: VMDeploy
     displayName: 'Deploy VM'
@@ -123,3 +126,5 @@ stages:
                 sudo apt-get install -y chromium-browser
                 pip3 install selenium
                 export PATH=$PATH:some/path
+      
+          # TODO: Execute test suite for Selenium  
