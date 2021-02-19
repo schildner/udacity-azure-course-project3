@@ -25,4 +25,4 @@ username = "eduard"
 #public_key_path = "id_rsa.pub"
 
 # public key on local machine
-public_key_path = "~/.ssh/authorized_keys/id_rsa.pub"
+public_key_path = "~/.ssh/authorized_keys/udacity_id_rsa.pub"

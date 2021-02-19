@@ -30,14 +30,14 @@ stages:
     - task: InstallSSHKey@0
       inputs:
         knownHostsEntry: 'AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
-        sshPublicKey: '$(myPubKey)'
-        sshKeySecureFile: 'azure_vm_id_rsa'
+        sshPublicKey: '$(udacityPubKey)'
+        sshKeySecureFile: 'udacity_id_rsa'
 
     - task: DownloadSecureFile@1
-      name: public_key
+      name: udacity_public_key
       displayName: 'Download Public Key'
       inputs:
-        secureFile: 'azure_vm_id_rsa.pub'
+        secureFile: 'udacity_id_rsa.pub'
         
     - task: TerraformInstaller@0
       inputs:
@@ -59,7 +59,7 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=$(public_key.secureFilePath)"'
+        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
 
     - task: TerraformTaskV1@0
@@ -67,7 +67,7 @@ stages:
         provider: 'azurerm'
         command: 'apply'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-        commandOptions: '-var "public_key_path=$(public_key.secureFilePath)"'
+        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)"'
         environmentServiceNameAzureRM: 'anja-subscription-service-connection'
 
     - task: ArchiveFiles@2
@@ -105,7 +105,7 @@ stages:
     environment:
       name:  'TEST'
       resourceType: VirtualMachine
-      tags: TAG1
+      tags: project_name="QA" stage="Submission"
     strategy:
       runOnce:
         deploy:
