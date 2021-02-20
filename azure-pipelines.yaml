@@ -111,7 +111,6 @@ stages:
           - task: Bash@3
             displayName: 'Run Regression Test Suite'
             inputs:
-              workingDirectory: '$(Build.ArtifactStagingDirectory)'
               targetType: 'inline'
               script: |
                 #! /bin/bash
