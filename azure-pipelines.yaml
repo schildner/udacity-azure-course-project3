@@ -115,7 +115,7 @@ stages:
               targetType: 'inline'
               script: |
                 #! /bin/bash
-                newman run RegressionTest.json -e MyEnv.json -r cli,junitfull --reporter-junitfull-export JUnitReport.xml
+                newman run $(Build.ArtifactStagingDirectory)/RegressionTest.json -e $(Build.ArtifactStagingDirectory)/MyEnv.json -r cli,junitfull --reporter-junitfull-export JUnitReport.xml
 
           - task: PublishTestResults@2
             inputs:
