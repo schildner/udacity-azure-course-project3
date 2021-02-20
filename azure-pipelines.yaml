@@ -26,7 +26,28 @@ stages:
       vmImage: ubuntu-20.04
     steps:
 
-    # TODO: Execute test suite for Postman  
+    - task: Bash@3
+      displayName: 'Install Postman'
+      inputs:
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          sudo snap install postman
+          npm install -g newman
+
+    - task: Bash@3
+      displayName: 'Run Integration Test Suite'
+      inputs:
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          newman run starter-files/automatedtesting/postman/StarterAPIs.json
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/TEST-*.xml'
+        testRunTitle: 'Publish test results'
 
     # Needed for Terraform VM deployment
     - task: InstallSSHKey@0
