@@ -92,17 +92,15 @@ stages:
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
-          - task: Npm@1
-            displayName: 'Install newman'
+          - task: Bash@3
+            displayName: 'Install Postman & Newman'
             inputs:
-              command: 'custom'
-              customCommand: 'sudo install newman -g' 
-
-          - task: Npm@1
-            displayName: 'Install newman-reporter-junitfull'
-            inputs:
-              command: 'custom'
-              customCommand: 'sudo install newman-reporter-junitfull -g'                     
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                sudo snap install postman
+                sudo npm install -g newman
+                sudo npm install newman-reporter-junitfull -g                   
     
           - task: Bash@3
             displayName: 'Run Regression Test Suite'
