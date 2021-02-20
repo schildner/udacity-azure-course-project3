@@ -26,29 +26,6 @@ stages:
       vmImage: ubuntu-20.04
     steps:
 
-    - task: Bash@3
-      displayName: 'Install Postman'
-      inputs:
-        targetType: 'inline'
-        script: |
-          #! /bin/bash
-          sudo snap install postman
-          sudo npm install -g newman
-
-    - task: Bash@3
-      displayName: 'Run Integration Test Suite'
-      inputs:
-        targetType: 'inline'
-        script: |
-          #! /bin/bash
-          newman run starter-files/automatedtesting/postman/StarterAPIs.json
-
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/TEST-*.xml'
-        testRunTitle: 'Publish test results'
-
     # Needed for Terraform VM deployment
     - task: InstallSSHKey@0
       inputs:
@@ -88,7 +65,7 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive FakeRestAPI'
       inputs:
-        rootFolderOrFile: 'starter-files/automatedtesting/jmeter/fakerestapi'
+        rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
@@ -114,6 +91,38 @@ stages:
               appName: $(webAppName)
               appType: webApp
               package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+
+          - task: Npm@1
+            displayName: 'Install newman'
+            inputs:
+              command: 'custom'
+              customCommand: 'install newman -g' 
+
+          - task: Npm@1
+            displayName: 'Install newman-reporter-junitfull'
+            inputs:
+              command: 'custom'
+              customCommand: 'install newman-reporter-junitfull -g'                     
+    
+          - task: Bash@3
+            displayName: 'Run Regression Test Suite'
+            inputs:
+              workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                newman run RegressionTest.postman_collection.json \
+                  -e UdacityAzureDevopsProject3.postman_environment.json \
+                  -r cli,junitfull \
+                  --reporter-junitfull-export JUnitReport.xml
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/JUnitReport.xml'
+              testRunTitle: 'Publish test results'
+              searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+
           # TODO: Execute test suite for JMeter
 
   - deployment: VMDeploy
