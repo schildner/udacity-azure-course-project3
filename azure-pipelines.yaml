@@ -75,10 +75,9 @@ stages:
       artifact: drop-fakerestapi
 
     - task: CopyFiles@2
-      displayName: 'Copy Postman Test definitions'
+      displayName: 'Copy Postman Test definitions to: $(Build.ArtifactStagingDirectory)'
       inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
-        Contents: '**'
+        Contents: 'automatedtesting/postman/**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - stage: Deploy
@@ -116,17 +115,14 @@ stages:
               targetType: 'inline'
               script: |
                 #! /bin/bash
-                newman run RegressionTest.postman_collection.json \
-                  -e UdacityAzureDevopsProject3.postman_environment.json \
-                  -r cli,junitfull \
-                  --reporter-junitfull-export JUnitReport.xml
+                newman run RegressionTest.json -e MyEnv.json -r cli,junitfull --reporter-junitfull-export JUnitReport.xml
 
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/JUnitReport.xml'
               testRunTitle: 'Publish test results'
-              searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+              searchFolder: '$(System.DefaultWorkingDirectory)'
 
           # TODO: Execute test suite for JMeter
 
