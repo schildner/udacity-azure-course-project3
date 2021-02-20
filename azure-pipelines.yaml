@@ -33,7 +33,7 @@ stages:
         script: |
           #! /bin/bash
           sudo snap install postman
-          npm install -g newman
+          sudo npm install -g newman
 
     - task: Bash@3
       displayName: 'Run Integration Test Suite'
