@@ -74,10 +74,19 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
 
+    - task: Bash@3
+      inputs:
+        workingDirectory: 'automatedtesting/postman'
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          pwd
+          find .
+
     - task: CopyFiles@2
       displayName: 'Copy Postman Test definitions to: $(Build.ArtifactStagingDirectory)'
       inputs:
-        SourceFolder: 'automatedtesting/postman/**'
+        SourceFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - stage: Deploy
@@ -108,15 +117,16 @@ stages:
                 sudo npm install -g newman
                 sudo npm install newman-reporter-junitfull -g      
 
-
           - task: Bash@3
+            displayName: 'Execute Regression Test Suite'
             inputs:
-              workingDirectory: 'automatedtesting/postman'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
               targetType: 'inline'
               script: |
                 #! /bin/bash
                 pwd
                 find .
+                ls -lah $(System.DefaultWorkingDirectory)/automatedtesting/postman
                 newman run RegressionTest.json \
                   -e MyEnv.json \
                   -r cli,junitfull \
