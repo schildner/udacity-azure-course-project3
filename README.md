@@ -48,7 +48,8 @@ This is a final project submission for [Udacity Azure DevOps Course](https://www
 - Create a Endurance Test Suite
 - Generate the HTML report (non-CI/CD) IMPORTANT: Since the AppService is using the Basic/Free plan, start small (2 users max) and once you are ready for the final submission, use up to 30 users for a max duration of 60 seconds. The "Data Out" quota for the AppService on this plan is only 165 MiB.
 
-### Instructions to Deploy Cloud Infrastructure on local PC with Terraform
+
+## Instructions to Deploy Cloud Infrastructure on local PC with Terraform
 
 - Configure Authentication via Service Principal and Client Secret
 
