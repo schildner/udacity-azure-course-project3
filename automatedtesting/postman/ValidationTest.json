@@ -54,17 +54,21 @@
 						"exec": [
 							"var jsonData = pm.response.json();",
 							"",
-							"var expectedAuthors = 600;",
+							"// Since this is fake API I observed the getAllAuthors returns unpredictable values, sometimes 400, sometimes 600 or also 800.",
+							"// Hence it makes no sense to test total number of authors.",
+							"//var expectedAuthors = 600;",
+							"//pm.test(\"Total authors found: \" + expectedAuthors, function () {",
+							"//    pm.expect(jsonData.length).to.eql(expectedAuthors);",
+							"//});",
 							"",
-							"pm.test(\"Found authors with IDs 1 - \" + expectedAuthors, function () {",
-							"    for (i = 0; i < expectedAuthors; i++) {",
+							"var minimumAuthors = 400;",
+							"pm.test(\"Found authors with IDs 1 - \" + minimumAuthors, function () {",
+							"    for (i = 0; i < minimumAuthors; i++) {",
 							"        pm.expect(jsonData[i].ID).to.eql(i+1);",
 							"    }",
 							"});",
 							"",
-							"pm.test(\"Total authors found: \" + expectedAuthors, function () {",
-							"    pm.expect(jsonData.length).to.eql(expectedAuthors);",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
