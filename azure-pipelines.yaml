@@ -74,6 +74,16 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
 
+    - task: Bash@3
+      displayName: 'Double check directory contents Build Stage'
+      inputs:
+        workingDirectory: 'automatedtesting/postman'
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          pwd
+          find .
+
 - stage: Deploy
   jobs:
   - deployment: FakeRestAPI
@@ -101,6 +111,16 @@ stages:
                 sudo snap install postman
                 sudo npm install -g newman
                 sudo npm install newman-reporter-junitfull -g      
+
+          - task: Bash@3
+            displayName: 'Double check directory contents Deploy Stage'
+            inputs:
+              workingDirectory: 'automatedtesting/postman'
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                pwd
+                find .
 
           - task: Bash@3
             displayName: 'Execute Regression Test Suite'
