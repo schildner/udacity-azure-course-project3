@@ -72,21 +72,35 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
 
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
+      displayName: 'Upload FakeRestAPI Package'
       artifact: drop-fakerestapi
 
-- stage: Deployment
+- stage: DeploymentFakeRestAPI
   jobs:
-  - job: FakeRestAPI
-    steps:
+  - deployment: DeployFakeRestAPI
+    displayName: 'Deploy FakeRestAPI'
+    pool:
+      vmImage: ubuntu-20.04
+    environment: 'TEST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureWebApp@1
+              displayName: 'Deploy Azure Web App'
+              inputs:
+                azureSubscription: 'anja-subscription-service-connection'
+                appName: $(webAppName)
+                appType: webApp
+                package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
-    - task: AzureWebApp@1
-      displayName: 'Deploy Azure Web App'
-      inputs:
-        azureSubscription: 'anja-subscription-service-connection'
-        appName: $(webAppName)
-        appType: webApp
-        package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+- stage: Tests
+  jobs:
+  - job: TestFakeRestAPI
+    displayName: 'Test FakeRestAPI'
+    pool:
+      vmImage: ubuntu-20.04
+    steps:
 
     - task: Bash@3
       displayName: 'Install Postman & Newman'
@@ -97,15 +111,6 @@ stages:
           sudo snap install postman
           sudo npm install -g newman
           sudo npm install newman-reporter-junitfull -g      
-
-    #- task: Bash@3
-    #  displayName: 'Double check directory contents Deploy Stage'
-    #  inputs:
-    #    targetType: 'inline'
-    #    script: |
-    #      #! /bin/bash
-    #      pwd
-    #      find .
 
     - task: Bash@3
       displayName: 'Execute Regression Test Suite'
