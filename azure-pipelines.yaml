@@ -6,6 +6,7 @@ stages:
     pool:
       vmImage: ubuntu-20.04
     steps:
+
     - task: Bash@3
       displayName: 'Double check directory contents Build Stage'
       inputs:
@@ -16,22 +17,17 @@ stages:
           pwd
           find .
 
-- stage: Deploy
+- stage: Deployment
   jobs:
-  - deployment: FakeRestAPI
+  - job: FakeRestAPI
     pool:
       vmImage: ubuntu-20.04
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-
-          - task: Bash@3
-            displayName: 'Double check directory contents Deploy Stage'
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                pwd
-                find .
+    steps:
+    - task: Bash@3
+      displayName: 'Double check directory contents Deploy Stage'
+      inputs:
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          pwd
+          find .
