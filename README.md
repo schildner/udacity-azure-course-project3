@@ -30,9 +30,11 @@ This is a final project submission for [Udacity Azure DevOps Course](https://www
 - Configure custom logging in Azure Monitor to ingest this log file. This may be done non-CI/CD.
 
 ### Test Suites Execution Details
+
 #### 1. Postman
 
-- Create a Regression Test Suite from the Starter APIs. Use the Publish Test Results task to publish the test results to Azure Pipelines.
+- Create a Regression Test Suite from the Starter APIs. 
+- Use the Publish Test Results task to publish the test results to Azure Pipelines.
 - Create a Data Validation Test Suite from the Starter APIs.
 
 #### 2. Selenium
@@ -46,10 +48,11 @@ This is a final project submission for [Udacity Azure DevOps Course](https://www
 - Use the starter APIs to create two Test Suites. Using variables, reference a data set (csv file) in the test cases where the data will change.
 - Create a Stress Test Suite
 - Create a Endurance Test Suite
-- Generate the HTML report (non-CI/CD) IMPORTANT: Since the AppService is using the Basic/Free plan, start small (2 users max) and once you are ready for the final submission, use up to 30 users for a max duration of 60 seconds. The "Data Out" quota for the AppService on this plan is only 165 MiB.
+- Generate the HTML report (non-CI/CD)
 
+IMPORTANT: Since the AppService is using the Basic/Free plan, start small (2 users max) and once you are ready for the final submission, use up to 30 users for a max duration of 60 seconds. The "Data Out" quota for the AppService on this plan is only 165 MiB.
 
-## Instructions to Deploy Cloud Infrastructure on local PC with Terraform
+## Instructions to Deploy Cloud Infrastructure from local PC with Terraform
 
 - Configure Authentication via Service Principal and Client Secret
 
