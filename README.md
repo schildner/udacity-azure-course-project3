@@ -1,8 +1,9 @@
 # Overview
 
-https://dev.azure.com/udacity-course/project3-qa/_apis/build/status/schildner.udacity-azure-course-project3?branchName=main
+[[Build Status](https://dev.azure.com/udacity-course/project3-qa/_apis/build/status/schildner.udacity-azure-course-project3?branchName=main)](https://dev.azure.com/udacity-course/project3-qa/_build/latest?definitionId=3&branchName=main)
 
-This is a final project ~~submission~~ (work in progress) for [Udacity Azure DevOps Course](https://www.udacity.com/course/devops-engineer-for-microsoft-azure-nanodegree--nd082): Ensuring Quality Releases.
+
+This is a final project submission for [Udacity Azure DevOps Course](https://www.udacity.com/course/devops-engineer-for-microsoft-azure-nanodegree--nd082): Ensuring Quality Releases.
 
 ## Project Specifications
 
