@@ -78,8 +78,6 @@ stages:
       displayName: 'Upload FakeRestAPI Package'
       artifact: drop-fakerestapi
 
-
-
 - stage: Deploy
   jobs:
   - deployment: DeployFakeRestAPI
@@ -99,12 +97,11 @@ stages:
                 appType: webApp
                 package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
-
-
-- stage: IntegrationTests
+- stage: Tests
   jobs:
-  - job: TestFakeRestAPI
-    displayName: 'Test FakeRestAPI'
+
+  - job: IntegrationTests
+    displayName: 'Integration Tests'
     pool:
       vmImage: ubuntu-20.04
     steps:
@@ -152,12 +149,7 @@ stages:
         testRunTitle: 'Publish test results'
         searchFolder: 'automatedtesting/postman'
 
-    # TODO: Execute test suite for JMeter
 
-
-
-- stage: UiTests
-  jobs:
   - deployment: UiTests
     displayName: 'UI Tests'
     environment:
@@ -170,7 +162,7 @@ stages:
           steps:
 
           - task: Bash@3
-            displayName: 'UI Tests'
+            displayName: 'Install Selenium'
             inputs:
               targetType: 'inline'
               script: |
@@ -183,4 +175,14 @@ stages:
                 pip3 install selenium
                 export PATH=$PATH:some/path
 
-    # TODO: Execute test suite for Selenium  
+          - task: Bash@3
+            displayName: 'Selenium Tests'
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                
+                # TODO: Execute test suite for Selenium  
+                echo 'hello from custom VM'
+                pwd
+                find .
