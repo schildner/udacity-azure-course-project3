@@ -74,21 +74,6 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
 
-    - task: Bash@3
-      inputs:
-        workingDirectory: 'automatedtesting/postman'
-        targetType: 'inline'
-        script: |
-          #! /bin/bash
-          pwd
-          find .
-
-    - task: CopyFiles@2
-      displayName: 'Copy Postman Test definitions to: $(Build.ArtifactStagingDirectory)'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman/**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
 - stage: Deploy
   jobs:
   - deployment: FakeRestAPI
@@ -120,13 +105,12 @@ stages:
           - task: Bash@3
             displayName: 'Execute Regression Test Suite'
             inputs:
-              workingDirectory: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+              workingDirectory: 'automatedtesting/postman'
               targetType: 'inline'
               script: |
                 #! /bin/bash
                 pwd
                 find .
-                ls -lah $(System.DefaultWorkingDirectory)/automatedtesting/postman
                 newman run RegressionTest.json \
                   -e MyEnv.json \
                   -r cli,junitfull \
