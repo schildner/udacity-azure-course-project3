@@ -101,7 +101,7 @@ stages:
 
 
 
-- stage: Integration Tests
+- stage: IntegrationTests
   jobs:
   - job: TestFakeRestAPI
     displayName: 'Test FakeRestAPI'
@@ -155,11 +155,11 @@ stages:
     # TODO: Execute test suite for JMeter
 
 
-    
-- stage: UI Tests (in the deployed VM)
+
+- stage: UiTests
   jobs:
-  - deployment: VMDeploy
-    displayName: 'Deploy VM'
+  - deployment: UI Tests
+    displayName: 'UI Tests'
     environment:
       name:  'TEST'
       resourceType: VirtualMachine
@@ -170,6 +170,7 @@ stages:
           steps:
 
           - task: Bash@3
+            displayName: 'UI Tests'
             inputs:
               targetType: 'inline'
               script: |
