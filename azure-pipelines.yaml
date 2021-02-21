@@ -74,12 +74,6 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
 
-    - task: CopyFiles@2
-      displayName: 'Copy Postman Test definitions to: $(Build.ArtifactStagingDirectory)'
-      inputs:
-        Contents: 'automatedtesting/postman/**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
 - stage: Deploy
   jobs:
   - deployment: FakeRestAPI
@@ -107,14 +101,22 @@ stages:
                 sudo snap install postman
                 sudo npm install -g newman
                 sudo npm install newman-reporter-junitfull -g                   
-    
+                
+          - task: Bash@3
+            displayName: "Show me the folders"
+            inputs:
+              targetType: 'inline'
+              script: |
+                pwd
+                find .
+
           - task: Bash@3
             displayName: 'Run Regression Test Suite'
             inputs:
               targetType: 'inline'
               script: |
                 #! /bin/bash
-                newman run $(Build.ArtifactStagingDirectory)/RegressionTest.json -e $(Build.ArtifactStagingDirectory)/MyEnv.json -r cli,junitfull --reporter-junitfull-export JUnitReport.xml
+                newman run RegressionTest.json -e MyEnv.json -r cli,junitfull --reporter-junitfull-export JUnitReport.xml
 
           - task: PublishTestResults@2
             inputs:
