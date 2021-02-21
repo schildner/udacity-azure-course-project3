@@ -115,33 +115,32 @@ stages:
           - task: Bash@3
             displayName: 'Double check directory contents Deploy Stage'
             inputs:
-              workingDirectory: 'automatedtesting/postman'
               targetType: 'inline'
               script: |
                 #! /bin/bash
                 pwd
                 find .
 
-          - task: Bash@3
-            displayName: 'Execute Regression Test Suite'
-            inputs:
-              workingDirectory: 'automatedtesting/postman'
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                pwd
-                find .
-                newman run RegressionTest.json \
-                  -e MyEnv.json \
-                  -r cli,junitfull \
-                  --reporter-junitfull-export JUnitReport.xml
+         # - task: Bash@3
+         #   displayName: 'Execute Regression Test Suite'
+         #   inputs:
+         #     workingDirectory: 'automatedtesting/postman'
+         #     targetType: 'inline'
+         #     script: |
+         #       #! /bin/bash
+         #       pwd
+         #       find .
+         #       newman run RegressionTest.json \
+         #         -e MyEnv.json \
+         #         -r cli,junitfull \
+         #         --reporter-junitfull-export JUnitReport.xml
 
-          - task: PublishTestResults@2
-            inputs:
-              testResultsFormat: 'JUnit'
-              testResultsFiles: '**/JUnitReport.xml'
-              testRunTitle: 'Publish test results'
-              searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
+        #  - task: PublishTestResults@2
+        #    inputs:
+        #      testResultsFormat: 'JUnit'
+        #      testResultsFiles: '**/JUnitReport.xml'
+        #      testRunTitle: 'Publish test results'
+        #      searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
 
           # TODO: Execute test suite for JMeter
 
