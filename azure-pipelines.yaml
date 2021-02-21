@@ -19,6 +19,7 @@ variables:
   environmentName: 'test'
 
 stages:
+
 - stage: Build
   jobs:
   - job: Build
@@ -89,7 +90,7 @@ stages:
   - deployment: FakeRestAPI
     pool:
       vmImage: ubuntu-20.04
-    environment: 'TEST'
+    #environment: 'TEST'
     strategy:
       runOnce:
         deploy:
