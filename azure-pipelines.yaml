@@ -74,6 +74,12 @@ stages:
       displayName: 'Upload Package'
       artifact: drop-fakerestapi
 
+    - task: CopyFiles@2
+      displayName: 'Copy Postman Test definitions to: $(Build.ArtifactStagingDirectory)'
+      inputs:
+        SourceFolder: 'automatedtesting/postman/**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
 - stage: Deploy
   jobs:
   - deployment: FakeRestAPI
@@ -100,30 +106,28 @@ stages:
                 #! /bin/bash
                 sudo snap install postman
                 sudo npm install -g newman
-                sudo npm install newman-reporter-junitfull -g                   
-                
-          - task: Bash@3
-            displayName: "Show me the folders"
-            inputs:
-              targetType: 'inline'
-              script: |
-                pwd
-                find .
+                sudo npm install newman-reporter-junitfull -g      
+
 
           - task: Bash@3
-            displayName: 'Run Regression Test Suite'
             inputs:
+              workingDirectory: 'automatedtesting/postman'
               targetType: 'inline'
               script: |
                 #! /bin/bash
-                newman run RegressionTest.json -e MyEnv.json -r cli,junitfull --reporter-junitfull-export JUnitReport.xml
+                pwd
+                find .
+                newman run RegressionTest.json \
+                  -e MyEnv.json \
+                  -r cli,junitfull \
+                  --reporter-junitfull-export JUnitReport.xml
 
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/JUnitReport.xml'
               testRunTitle: 'Publish test results'
-              searchFolder: '$(System.DefaultWorkingDirectory)'
+              searchFolder: '$(System.DefaultWorkingDirectory)/automatedtesting/postman'
 
           # TODO: Execute test suite for JMeter
 
