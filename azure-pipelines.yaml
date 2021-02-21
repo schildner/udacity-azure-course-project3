@@ -158,7 +158,7 @@ stages:
 
 - stage: UiTests
   jobs:
-  - deployment: UI Tests
+  - deployment: UiTests
     displayName: 'UI Tests'
     environment:
       name:  'TEST'
