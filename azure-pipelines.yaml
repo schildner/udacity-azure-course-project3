@@ -183,11 +183,11 @@ stages:
                 python3 -m venv env
                 
                 pip3 install selenium
-                wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
-                unzip chromedriver_linux64.zip
-                rm chromedriver_linux64.zip
-                sudo chown root:root chromedriver
-                sudo chmod 777 chromedriver
+                #wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
+                #unzip chromedriver_linux64.zip
+                #rm chromedriver_linux64.zip
+                #sudo chown root:root chromedriver
+                #sudo chmod 777 chromedriver
                 export PATH=$PATH:/usr/bin/chromium-browser:`pwd`
 
           - task: Bash@3
