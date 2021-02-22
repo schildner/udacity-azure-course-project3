@@ -8,11 +8,11 @@ def functional_ui_test(user, password):
     # --uncomment when running in Azure DevOps.
     options = ChromeOptions()
     options.add_argument("--headless") 
+    # for debugging enable driver constructor with no options
+    # driver = webdriver.Chrome()
     driver = webdriver.Chrome(options=options)
 
-
     # Test Login to the site
-    driver = webdriver.Chrome()
     print ('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
     driver.find_element_by_css_selector("input[id='user-name']").send_keys(user)
