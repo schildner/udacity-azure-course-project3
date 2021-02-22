@@ -77,7 +77,7 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive UI tests'
       inputs:
-        rootFolderOrFile: 'automatedtesting/selenium/'
+        rootFolderOrFile: 'automatedtesting/selenium'
         includeRootFolder: false
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-ui-tests.zip'
@@ -85,6 +85,10 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload FakeRestAPI Package'
       artifact: drop-fakerestapi
+
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-ui-tests.zip
+      displayName: 'Upload UI Tests Package'
+      artifact: drop-ui-tests
 
 - stage: Deploy
   jobs:
