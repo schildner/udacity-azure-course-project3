@@ -187,13 +187,6 @@ stages:
                 pip3 install selenium
                 export PATH=$PATH:`pwd`:~/Downloads/
 
-          - task: DownloadBuildArtifacts@0
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-ui-tests.zip'
-              downloadPath: '$(System.ArtifactsDirectory)'
-
           - task: ExtractFiles@1
             inputs:
               destinationFolder: 
@@ -212,4 +205,5 @@ stages:
                 pwd
                 find .
                 ls -lah $(System.ArtifactsDirectory)
+                ls -lah $(System.DefaultWorkingDirectory)
                 python functional_ui_test.py
