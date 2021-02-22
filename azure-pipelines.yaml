@@ -74,6 +74,14 @@ stages:
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
 
+    - task: ArchiveFiles@2
+      displayName: 'Archive UI tests'
+      inputs:
+        rootFolderOrFile: 'automatedtesting/selenium/'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-ui-tests.zip'
+
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload FakeRestAPI Package'
       artifact: drop-fakerestapi
@@ -100,7 +108,7 @@ stages:
 - stage: Tests
   jobs:
 
-  - job: IntegrationTests
+  - job: Integration
     displayName: 'Integration Tests'
     pool:
       vmImage: ubuntu-20.04
@@ -150,8 +158,8 @@ stages:
         searchFolder: 'automatedtesting/postman'
 
 
-  - deployment: UiTests
-    displayName: 'UI Tests'
+  - deployment: UI
+    displayName: 'Functional UI Tests'
     environment:
       name:  'TEST'
       resourceType: VirtualMachine
@@ -175,14 +183,29 @@ stages:
                 pip3 install selenium
                 export PATH=$PATH:`pwd`:~/Downloads/
 
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-ui-tests.zip'
+              downloadPath: '$(System.ArtifactsDirectory)'
+
+          - task: ExtractFiles@1
+            inputs:
+              destinationFolder: 
+              archiveFilePatterns: 'test/*.zip'
+              cleanDestinationFolder: true
+              overwriteExistingFiles: false
+
           - task: Bash@3
             displayName: 'Selenium Tests'
             inputs:
               targetType: 'inline'
               script: |
                 #! /bin/bash
-                
-                # TODO: Execute test suite for Selenium  
+                 
                 echo 'hello from custom VM'
                 pwd
                 find .
+                ls -lah $(System.ArtifactsDirectory)
+                python functional_ui_test.py
