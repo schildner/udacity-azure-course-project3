@@ -187,12 +187,12 @@ stages:
                 pip3 install selenium
                 export PATH=$PATH:`pwd`:~/Downloads/
 
-          - task: ExtractFiles@1
-            inputs:
-              destinationFolder: 
-              archiveFilePatterns: 'test/*.zip'
-              cleanDestinationFolder: true
-              overwriteExistingFiles: false
+        #  - task: ExtractFiles@1
+        #    inputs:
+        #      destinationFolder: 
+        #      archiveFilePatterns: '**.zip'
+        #      cleanDestinationFolder: true
+        #      overwriteExistingFiles: false
 
           - task: Bash@3
             displayName: 'Selenium Tests'
@@ -206,4 +206,6 @@ stages:
                 find .
                 ls -lah $(System.ArtifactsDirectory)
                 ls -lah $(System.DefaultWorkingDirectory)
-                python functional_ui_test.py
+
+                # extract manually
+                # python functional_ui_test.py
