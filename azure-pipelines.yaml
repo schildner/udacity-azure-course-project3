@@ -182,13 +182,6 @@ stages:
                 pip3 install selenium
                 export PATH=$PATH:`pwd`:~/Downloads/
 
-        #  - task: ExtractFiles@1
-        #    inputs:
-        #      destinationFolder: 
-        #      archiveFilePatterns: '**.zip'
-        #      cleanDestinationFolder: true
-        #      overwriteExistingFiles: false
-
           - task: Bash@3
             displayName: 'Selenium Tests'
             inputs:
@@ -199,9 +192,5 @@ stages:
                 echo 'hello from custom VM'
                 pwd
                 find .
-
                 ls -lah ..
-
-                # extract manually
-                
-                # python functional_ui_test.py
+                python ../drop-ui-tests/functional_ui_test.py
