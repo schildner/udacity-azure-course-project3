@@ -188,7 +188,6 @@ stages:
                 #rm chromedriver_linux64.zip
                 #sudo chown root:root chromedriver
                 #sudo chmod 777 chromedriver
-                export PATH=$PATH:/usr/bin/chromium-browser:`pwd`
 
           - task: Bash@3
             displayName: 'Selenium Tests'
@@ -199,7 +198,7 @@ stages:
                  
                 echo 'hello from custom VM'
                 pwd
-                find .
-                ls -lah ..
+                ls -lah .
                 source env/bin/activate
+                export PATH=$PATH:/usr/bin/chromium-browser:`pwd`
                 python3 ../drop-ui-tests/functional_ui_test.py
