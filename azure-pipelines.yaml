@@ -74,20 +74,12 @@ stages:
         archiveType: 'zip'
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
 
-    - task: ArchiveFiles@2
-      displayName: 'Archive UI tests'
-      inputs:
-        rootFolderOrFile: 'automatedtesting/selenium'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-ui-tests.zip'
-
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
       displayName: 'Upload FakeRestAPI Package'
       artifact: drop-fakerestapi
 
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-ui-tests.zip
-      displayName: 'Upload UI Tests Package'
+    - publish: automatedtesting/selenium/functional_ui_test.py
+      displayName: 'Upload UI Tests definition'
       artifact: drop-ui-tests
 
 - stage: Deploy
@@ -172,6 +164,9 @@ stages:
       runOnce:
         deploy:
           steps:
+          
+          - download: current
+            artifact: drop-ui-tests
 
           - task: Bash@3
             displayName: 'Install Selenium'
@@ -204,8 +199,9 @@ stages:
                 echo 'hello from custom VM'
                 pwd
                 find .
-                ls -lah $(System.ArtifactsDirectory)
-                ls -lah $(System.DefaultWorkingDirectory)
+
+                ls -lah ..
 
                 # extract manually
+                
                 # python functional_ui_test.py
