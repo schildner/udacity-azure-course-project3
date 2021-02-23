@@ -165,11 +165,18 @@ stages:
         jmeterVersion: '5.2.1'
     
     - task: Bash@3
-      displayName: 'Run Jmeter test'
+      displayName: 'Run JMeter test'
       inputs:
         targetType: 'inline'
         script: |
-          jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/performance-test-dataset.csv
+          jmeter -n -t automatedtesting/jmeter/TestPlan.jmx -Jresdir=automatedtesting/jmeter/performance-test-dataset.csv
+
+    - task: publishhtmlreport@1
+      inputs:
+        htmlType: 'genericHTML'
+        htmlPath: 'performance-test-report'
+        JmeterReportsPath: 'performance-test-report'
+
 
   - deployment: UI
     displayName: 'Functional UI Tests'
@@ -186,37 +193,16 @@ stages:
             artifact: drop-ui-tests
 
           - task: Bash@3
-            displayName: 'Install Selenium'
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                sudo apt-get install python3-venv
-                python3 -m venv env
-                
-                pip3 install selenium
-                wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
-                unzip chromedriver_linux64.zip
-                rm chromedriver_linux64.zip
-                sudo chown root:root chromedriver
-                sudo chmod 777 chromedriver
-                export PATH=$PATH:/usr/bin/chromium-browser:`pwd`
-
-          - task: Bash@3
             displayName: 'Selenium Tests'
             inputs:
               targetType: 'inline'
               script: |
                 #! /bin/bash
                  
-                echo 'hello from custom VM'
+                echo 'Hello from a custom VM with pre-installed Selenium, Chromium-browser & Chromedriver!'
                 pwd
                 find .
                 ls -lah ..
                 source env/bin/activate
+                export PATH=$PATH:`pwd` # add chromedriver executable to path
                 python3 ../drop-ui-tests/functional_ui_test.py
