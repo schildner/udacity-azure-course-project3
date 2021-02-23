@@ -171,11 +171,11 @@ stages:
         script: |
           jmeter -n -t automatedtesting/jmeter/TestPlan.jmx -Jresdir=automatedtesting/jmeter/performance-test-dataset.csv -o performance-test-report
 
-    - task: publishhtmlreport@1
-      inputs:
-        htmlType: 'genericHTML'
-        htmlPath: 'performance-test-report'
-        JmeterReportsPath: '$(Build.SourcesDirectory)/TestPlan.html'
+   # - task: publishhtmlreport@1
+   #   inputs:
+   #     htmlType: 'genericHTML'
+   #     htmlPath: 'performance-test-report'
+   #     JmeterReportsPath: '$(Build.SourcesDirectory)/TestPlan.html'
 
 
   - deployment: UI
