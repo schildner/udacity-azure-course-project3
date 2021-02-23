@@ -25,7 +25,18 @@
     "provisioners": [{
       "inline": [
           "apt-get update",
-          "apt-get upgrade -y"
+          "apt-get upgrade -y",
+          "apt-get install python3-pip -y",
+          "apt-get install unzip -y",
+          "apt-get install -y chromium-browser",
+          "apt-get install python3-venv",
+          "python3 -m venv env",
+          "pip3 install selenium",
+          "wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip",
+          "unzip chromedriver_linux64.zip",
+          "rm chromedriver_linux64.zip",
+          "chown root:root chromedriver",
+          "chmod 777 chromedriver"
       ],
       "inline_shebang": "/bin/sh -x",
       "type": "shell",

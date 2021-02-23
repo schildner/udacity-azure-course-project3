@@ -153,6 +153,23 @@ stages:
         testRunTitle: 'Publish test results'
         searchFolder: 'automatedtesting/postman'
 
+  - job: Jmeter
+    displayName: 'Performance Tests'
+    pool:
+      vmImage: 'ubuntu-20.04'
+    steps:
+
+    - task: JMeterInstaller@0
+      displayName: 'Install JMeter 5.2.1'
+      inputs:
+        jmeterVersion: '5.2.1'
+    
+    - task: Bash@3
+      displayName: 'Run Jmeter test'
+      inputs:
+        targetType: 'inline'
+        script: |
+          jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/performance-test-dataset.csv
 
   - deployment: UI
     displayName: 'Functional UI Tests'
