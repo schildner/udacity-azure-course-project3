@@ -1,0 +1,7 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1614149714105,10173,GET All Activities,200,OK,EnduranceTestSuite 1-1,text,true,,351,245,2,4,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities/1,10173,0,196
+1614149714519,9759,GET All Activities,200,OK,EnduranceTestSuite 1-2,text,true,,351,245,2,4,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities/2,9759,0,60
+1614150189296,255,GET All Activities,200,OK,EnduranceTestSuite 1-1,text,true,,352,245,1,2,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities/1,255,0,205
+1614150189683,81,GET All Activities,200,OK,EnduranceTestSuite 1-2,text,true,,351,245,1,1,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities/2,80,0,44
+1614151240895,227,GET All Activities,200,OK,EnduranceTestSuite 1-1,text,true,,352,245,1,2,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities/1,226,0,179
+1614151241325,75,GET All Activities,200,OK,EnduranceTestSuite 1-2,text,true,,351,245,1,1,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities/2,75,0,34
