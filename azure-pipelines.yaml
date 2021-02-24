@@ -153,7 +153,7 @@ stages:
         testRunTitle: 'Publish test results'
         searchFolder: 'automatedtesting/postman'
 
-  - job: Jmeter
+  - job: Performance
     displayName: 'Performance Tests'
     pool:
       vmImage: 'ubuntu-20.04'
@@ -169,16 +169,19 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          jmeter -n -t automatedtesting/jmeter/TestPlan.jmx -Jresdir=automatedtesting/jmeter/performance-test-dataset.csv -o performance-test-report
+          jmeter -n -t automatedtesting/jmeter/TestPlan.jmx \
+            -l LoadReports/results.jtl \
+            -Jresdir=automatedtesting/jmeter/performance-test-dataset.csv \
+            -e \
+            -o performance-test-report
 
-   # - task: publishhtmlreport@1
-   #   inputs:
-   #     htmlType: 'genericHTML'
-   #     htmlPath: 'performance-test-report'
-   #     JmeterReportsPath: '$(Build.SourcesDirectory)/TestPlan.html'
+    - task: publishhtmlreport@1
+      inputs:
+        htmlType: 'genericHTML'
+        JmeterReportsPath: 'performance-test-report'
 
 
-  - deployment: UI
+  - deployment: Functional
     displayName: 'Functional UI Tests'
     environment:
       name:  'TEST'
