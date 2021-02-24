@@ -134,3 +134,4 @@ dmypy.json
 **/*.plan
 
 **/performance-test-report
+submission*.zip

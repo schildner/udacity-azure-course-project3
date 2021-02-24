@@ -6,11 +6,12 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 def functional_ui_test(user, password):
     print('Starting the browser...')
     # --uncomment when running in Azure DevOps.
-    options = ChromeOptions()
-    options.add_argument("--headless") 
+    #options = ChromeOptions()
+    #options.add_argument("--headless") 
+    #driver = webdriver.Chrome(options=options)
+    
     # for debugging enable driver constructor with no options
-    # driver = webdriver.Chrome()
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome()
 
     # Test Login to the site
     print ('Browser started successfully. Navigating to the demo page to login.')
@@ -30,21 +31,23 @@ def functional_ui_test(user, password):
     path_inventory_item = path_content_div + " > div[id='inventory_container'] > div[class='inventory_list'] > div[class='inventory_item']"
     product_items = driver.find_elements_by_css_selector(path_inventory_item)
     assert len(product_items) == 6
-    print("Successfully found 6 product items.")
-
-    for item in product_items:
-        item.find_element_by_xpath('.//div[@class="pricebar"]//button[@class="btn_primary btn_inventory"]').click()
-        print("Succesfully added an item to shopping cart.")
+    print("Successfully found 6 product items.")    
+    
+    for i in range(6):
+        path_product_item_name = path_inventory_item + " > div[class='inventory_item_label'] > a[id='item_" + str(i) + "_title_link'] > div[class='inventory_item_name']"
+        product_item_name = driver.find_element_by_css_selector(path_product_item_name)
+        product_item_name.find_element_by_xpath('..//..//..//div[@class="pricebar"]//button[@class="btn_primary btn_inventory"]').click()
+        print("Succesfully added to shopping cart: " + product_item_name.text)
 
     path_shopping_cart_link = "div[id='page_wrapper'] > div[id='contents_wrapper'] > div[id='header_container'] > div[id='shopping_cart_container'] > a.shopping_cart_link.fa-layers.fa-fw"
     path_shopping_cart_badge = path_shopping_cart_link + " > span.fa-layers-counter.shopping_cart_badge"
     shopping_cart_total_items = driver.find_element_by_css_selector(path_shopping_cart_badge).text
     assert '6' == shopping_cart_total_items
-    print("Succesfully added total of 6 items to shopping cart.")
+    print("Succesfully added to shopping cart: 6 items in total")
 
 
     # Test Remove Items from Shopping Cart
-    print("Spouse came, destroying the evidence... ;-)")
+    print("A spouse came in, need to destroy the the evidence... ;-)")
     driver.find_element_by_css_selector(path_shopping_cart_link).click()
     path_cart_title = "div[id='page_wrapper'] > div[id='contents_wrapper'] > div[class='subheader']"
     cart_title = driver.find_element_by_css_selector(path_cart_title).text
