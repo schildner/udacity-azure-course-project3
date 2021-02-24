@@ -132,3 +132,5 @@ dmypy.json
 **/.terraform/*
 **/.terraform*
 **/*.plan
+
+**/performance-test-report
