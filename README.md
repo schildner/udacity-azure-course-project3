@@ -8,18 +8,24 @@ This is a final project submission for [Udacity Azure DevOps Course](https://www
 
 ### 1. Create Azure DevOps CI/CD pipeline
 
-- Create the tasks that allow for Terraform to run and create the resources below:
-  - AppService
-  - Network :white_check_mark:
-  - Network Security Group :white_check_mark:
-  - Public IP :white_check_mark:
-  - Resource Group :white_check_mark:
-  - Linux VM (created using Packer -- using a Standard_B1s size for lowest cost) :white_check_mark:
+- Create the tasks that allow for Terraform to run and create the resources:
 
-- Execute Test Suites for:
-  - Postman - runs during build stage :white_check_mark:
-  - Selenium - runs on the linux VM in the deployment stage :white_check_mark:
-  - JMeter - runs against the AppService in the deployment stage :white_check_mark:
+Resource | Created via Terraform
+--- | ---
+AppService | :white_check_mark:
+Network | :white_check_mark:
+Network Security Group | :white_check_mark:
+Public IP | :white_check_mark:
+Resource Group | :white_check_mark:
+Linux VM (created using Packer -- using a Standard_B1s size for lowest cost) | :white_check_mark:
+
+- Execute Test Suites
+
+Test Type | Technology | CI/CD Pipeline Execution | Status
+--- | --- | --- | ---
+Integration | Postman | Build Stage | :white_check_mark:
+UI | Selenium | Deployment Stage - runs in custom linux VM | :white_check_mark:
+Performance | JMeter | Deployment Stage - runs against the AppService| :white_check_mark:
 
 ### 2. Azure Monitor
 
