@@ -165,19 +165,36 @@ stages:
         jmeterVersion: '5.2.1'
     
     - task: Bash@3
-      displayName: 'Run JMeter test'
+      displayName: 'Endurance Test Suite'
       inputs:
         targetType: 'inline'
         script: |
-          jmeter -n -t automatedtesting/jmeter/TestPlan.jmx \
-            -l performance-test-report/results.jtl \
+          jmeter -n -t automatedtesting/jmeter/EnduranceTestSuite.jmx \
+            -l endurance-test-report/results.jtl \
             -e \
-            -o performance-test-report
+            -o endurance-test-report
 
     - task: publishhtmlreport@1
+      displayName: 'Publish Endurance Test Results'
       inputs:
         htmlType: 'Jmeter'
-        JmeterReportsPath: '$(Build.SourcesDirectory)/performance-test-report'    
+        JmeterReportsPath: '$(Build.SourcesDirectory)/endurance-test-report'    
+
+    - task: Bash@3
+      displayName: 'Stress Test Suite'
+      inputs:
+        targetType: 'inline'
+        script: |
+          jmeter -n -t automatedtesting/jmeter/StressTestSuite.jmx \
+            -l stress-test-report/results.jtl \
+            -e \
+            -o stress-test-report
+
+    - task: publishhtmlreport@1
+      displayName: 'Publish Stress Test Results'
+      inputs:
+        htmlType: 'Jmeter'
+        JmeterReportsPath: '$(Build.SourcesDirectory)/stress-test-report'            
 
   - deployment: Functional
     displayName: 'Functional UI Tests'
