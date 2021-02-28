@@ -172,7 +172,7 @@ stages:
           jmeter -n \
             -t automatedtesting/jmeter/EnduranceTestSuite.jmx \
             -l endurance-test-report/endurance-results.jtl \
-            -Jresdir=automatedtesting/jmeter/performance-test-input-dataset.csv
+            -Jresdir=automatedtesting/jmeter/performance-test-input-dataset.csv \
             -e \
             -o endurance-test-report
 
@@ -190,7 +190,7 @@ stages:
           jmeter -n \
             -t automatedtesting/jmeter/StressTestSuite.jmx \
             -l stress-test-report/stress-results.jtl \
-            -Jresdir=automatedtesting/jmeter/performance-test-input-dataset.csv
+            -Jresdir=automatedtesting/jmeter/performance-test-input-dataset.csv \
             -e \
             -o stress-test-report
 
