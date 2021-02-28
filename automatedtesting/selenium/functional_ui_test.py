@@ -6,12 +6,12 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 def functional_ui_test(user, password):
     print('Starting the browser...')
     # --uncomment when running in Azure DevOps.
-    #options = ChromeOptions()
-    #options.add_argument("--headless") 
-    #driver = webdriver.Chrome(options=options)
+    options = ChromeOptions()
+    options.add_argument("--headless") 
+    driver = webdriver.Chrome(options=options)
     
     # for debugging enable driver constructor with no options
-    driver = webdriver.Chrome()
+    # driver = webdriver.Chrome()
 
     # Test Login to the site
     print ('Browser started successfully. Navigating to the demo page to login.')
@@ -52,13 +52,15 @@ def functional_ui_test(user, password):
     path_cart_title = "div[id='page_wrapper'] > div[id='contents_wrapper'] > div[class='subheader']"
     cart_title = driver.find_element_by_css_selector(path_cart_title).text
     assert 'Your Cart' in cart_title
+    print("Successfully entered the shopping cart page.")
 
     path_cart_item_remove_buttons = "div[id='page_wrapper'] > div[id='contents_wrapper'] > div[id='cart_contents_container'] > div > div[class='cart_list'] > div[class='cart_item'] > div[class='cart_item_label'] > div[class='item_pricebar'] > button[class='btn_secondary cart_button']"
     remove_item_buttons = driver.find_elements_by_css_selector(path_cart_item_remove_buttons)
     
     for remove_button in remove_item_buttons:
+        shopping_cart_item_name = remove_button.find_element_by_xpath('..//..//a[contains(@id, "_title_link")]//div[@class="inventory_item_name"]').text
         remove_button.click()
-        print("Succesfully removed an item from shopping cart.")
+        print("Succesfully removed an item from shopping cart: " + shopping_cart_item_name)
 
     shopping_cart_total_items = driver.find_elements_by_css_selector(path_shopping_cart_badge)
     assert 0 == len(shopping_cart_total_items)
