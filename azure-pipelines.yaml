@@ -171,7 +171,6 @@ stages:
         script: |
           jmeter -n -t automatedtesting/jmeter/TestPlan.jmx \
             -l performance-test-report/results.jtl \
-            -Jresdir=automatedtesting/jmeter/performance-test-dataset.csv \
             -e \
             -o performance-test-report
 
