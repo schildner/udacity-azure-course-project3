@@ -184,16 +184,6 @@ stages:
             -e \
             -o endurance-test-report
 
-    - task: Bash@3
-      displayName: 'Print logs'
-      inputs:
-        targetType: 'inline'
-        script: |
-          ls -lah endurance-test-report/
-          ls -lah .
-          pwd
-          cat jmeter.log
-
     - task: publishhtmlreport@1
       displayName: 'Publish Endurance Test Results'
       inputs:
@@ -216,7 +206,17 @@ stages:
       displayName: 'Publish Stress Test Results'
       inputs:
         htmlType: 'Jmeter'
-        JmeterReportsPath: '$(Build.SourcesDirectory)/stress-test-report'            
+        JmeterReportsPath: '$(Build.SourcesDirectory)/stress-test-report'    
+        
+        
+    - task: Bash@3
+      displayName: 'Print Performance Test Logs'
+      inputs:
+        targetType: 'inline'
+        script: |
+          ls -lah endurance-test-report/
+          ls -lah stress-test-report/
+          cat jmeter.log        
 
 #  - deployment: Functional
 #    displayName: 'Functional UI Tests'
