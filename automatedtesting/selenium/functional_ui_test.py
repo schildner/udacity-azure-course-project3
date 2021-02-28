@@ -1,6 +1,8 @@
 # #!/usr/bin/env python
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common import desired_capabilities
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 # Start the browser and login with standard_user
 def functional_ui_test(user, password):
@@ -8,7 +10,12 @@ def functional_ui_test(user, password):
     # --uncomment when running in Azure DevOps.
     options = ChromeOptions()
     options.add_argument("--headless") 
-    driver = webdriver.Chrome(options=options)
+
+    # enable browser logging
+    desired_capabilities = DesiredCapabilities.CHROME
+    desired_capabilities['goog:loggingPrefs'] = { 'browser':'ALL' }
+
+    driver = webdriver.Chrome(options=options, desired_capabilities=desired_capabilities)
     
     # for debugging enable driver constructor with no options
     # driver = webdriver.Chrome()
@@ -64,7 +71,11 @@ def functional_ui_test(user, password):
 
     shopping_cart_total_items = driver.find_elements_by_css_selector(path_shopping_cart_badge)
     assert 0 == len(shopping_cart_total_items)
-    print("Succesfully removed all items from shopping cart.")    
+    print("Succesfully removed all items from shopping cart.")
+    
+    # Print Collected Browser Logs
+    for log_entry in driver.get_log('browser'):
+        print(log_entry)
 
 
 functional_ui_test('standard_user', 'secret_sauce')

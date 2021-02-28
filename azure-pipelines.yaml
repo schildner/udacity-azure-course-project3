@@ -35,78 +35,78 @@ stages:
           pwd
 
       # Needed for Terraform VM deployment
-#    - task: InstallSSHKey@0
-#      inputs:
-#        knownHostsEntry: 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBByBaEbrJf+v9agEtM6g/LruTudlDznQ/Dca0BW/awH3/lX26tI/a6kDg90tOCOZIMotbavb3ABKJfkaDvFFGtI='
-#        sshPublicKey: '$(udacityPubKey)'
-#        sshKeySecureFile: 'udacity_id_rsa'
-#
-#    - task: DownloadSecureFile@1
-#      name: udacity_public_key
-#      displayName: 'Download Public Key'
-#      inputs:
-#        secureFile: 'udacity_id_rsa.pub'
-#        
-#    - task: TerraformInstaller@0
-#      displayName: 'Install Terraform'
-#      inputs:
-#        terraformVersion: '0.14.7'
-#
-#    - task: TerraformTaskV1@0
-#      displayName: 'Initialize Terraform'
-#      inputs:
-#        provider: 'azurerm'
-#        command: 'init'
-#        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-#        backendServiceArm: 'anja-subscription-service-connection'
-#        backendAzureRmResourceGroupName: 'tstate'
-#        backendAzureRmStorageAccountName: 'tstate19841'
-#        backendAzureRmContainerName: 'tstate'
-#        backendAzureRmKey: 'terraform-project3.tfstate'
-#
-#    - task: TerraformTaskV1@0
-#      displayName: 'Deploy Cloud Infrastructure'
-#      inputs:
-#        provider: 'azurerm'
-#        command: 'apply'
-#        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
-#        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)"'
-#        environmentServiceNameAzureRM: 'anja-subscription-service-connection'
-#
-#    - task: ArchiveFiles@2
-#      displayName: 'Archive FakeRestAPI'
-#      inputs:
-#        rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
-#        includeRootFolder: false
-#        archiveType: 'zip'
-#        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-#
-#    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-#      displayName: 'Upload FakeRestAPI Package'
-#      artifact: drop-fakerestapi
-#
-#    - publish: automatedtesting/selenium/functional_ui_test.py
-#      displayName: 'Upload UI Tests definition'
-#      artifact: drop-ui-tests
-#
-#- stage: Deploy
-#  jobs:
-#  - deployment: DeployFakeRestAPI
-#    displayName: 'Deploy app to custom VM'
-#    pool:
-#      vmImage: ubuntu-20.04
-#    environment: 'TEST'
-#    strategy:
-#      runOnce:
-#        deploy:
-#          steps:
-#            - task: AzureWebApp@1
-#              displayName: 'Deploy Azure Web App'
-#              inputs:
-#                azureSubscription: 'anja-subscription-service-connection'
-#                appName: $(webAppName)
-#                appType: webApp
-#                package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBByBaEbrJf+v9agEtM6g/LruTudlDznQ/Dca0BW/awH3/lX26tI/a6kDg90tOCOZIMotbavb3ABKJfkaDvFFGtI='
+        sshPublicKey: '$(udacityPubKey)'
+        sshKeySecureFile: 'udacity_id_rsa'
+
+    - task: DownloadSecureFile@1
+      name: udacity_public_key
+      displayName: 'Download Public Key'
+      inputs:
+        secureFile: 'udacity_id_rsa.pub'
+        
+    - task: TerraformInstaller@0
+      displayName: 'Install Terraform'
+      inputs:
+        terraformVersion: '0.14.7'
+
+    - task: TerraformTaskV1@0
+      displayName: 'Initialize Terraform'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
+        backendServiceArm: 'anja-subscription-service-connection'
+        backendAzureRmResourceGroupName: 'tstate'
+        backendAzureRmStorageAccountName: 'tstate19841'
+        backendAzureRmContainerName: 'tstate'
+        backendAzureRmKey: 'terraform-project3.tfstate'
+
+    - task: TerraformTaskV1@0
+      displayName: 'Deploy Cloud Infrastructure'
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/environment/test'
+        commandOptions: '-var "public_key_path=$(udacity_public_key.secureFilePath)"'
+        environmentServiceNameAzureRM: 'anja-subscription-service-connection'
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive FakeRestAPI'
+      inputs:
+        rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+      displayName: 'Upload FakeRestAPI Package'
+      artifact: drop-fakerestapi
+
+    - publish: automatedtesting/selenium/functional_ui_test.py
+      displayName: 'Upload UI Tests definition'
+      artifact: drop-ui-tests
+
+- stage: Deploy
+  jobs:
+  - deployment: DeployFakeRestAPI
+    displayName: 'Deploy app to custom VM'
+    pool:
+      vmImage: ubuntu-20.04
+    environment: 'TEST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureWebApp@1
+              displayName: 'Deploy Azure Web App'
+              inputs:
+                azureSubscription: 'anja-subscription-service-connection'
+                appName: $(webAppName)
+                appType: webApp
+                package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
 - stage: Tests
   jobs:
@@ -124,42 +124,42 @@ stages:
         script: |
           #! /bin/bash
           pwd
-#          sudo snap install postman
-#          sudo npm install -g newman
-#          sudo npm install newman-reporter-junitfull -g      
-#
-#    - task: Bash@3
-#      displayName: 'Regression Tests'
-#      inputs:
-#        workingDirectory: 'automatedtesting/postman'
-#        targetType: 'inline'
-#        script: |
-#          #! /bin/bash
-#
-#          newman run RegressionTest.json \
-#            -e MyEnv.json \
-#            -r cli,junitfull \
-#            --reporter-junitfull-export JUnitReportRegression.xml
-#
-#    - task: Bash@3
-#      displayName: 'Data Validation Tests'
-#      inputs:
-#        workingDirectory: 'automatedtesting/postman'
-#        targetType: 'inline'
-#        script: |
-#          #! /bin/bash
-#
-#          newman run ValidationTest.json \
-#            -e MyEnv.json \
-#            -r cli,junitfull \
-#            --reporter-junitfull-export JUnitReportValidation.xml
-#
-#    - task: PublishTestResults@2
-#      inputs:
-#        testResultsFormat: 'JUnit'
-#        testResultsFiles: '**/JUnitReport*.xml'
-#        testRunTitle: 'Publish test results'
-#        searchFolder: 'automatedtesting/postman'
+          sudo snap install postman
+          sudo npm install -g newman
+          sudo npm install newman-reporter-junitfull -g      
+
+    - task: Bash@3
+      displayName: 'Regression Tests'
+      inputs:
+        workingDirectory: 'automatedtesting/postman'
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+
+          newman run RegressionTest.json \
+            -e MyEnv.json \
+            -r cli,junitfull \
+            --reporter-junitfull-export JUnitReportRegression.xml
+
+    - task: Bash@3
+      displayName: 'Data Validation Tests'
+      inputs:
+        workingDirectory: 'automatedtesting/postman'
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+
+          newman run ValidationTest.json \
+            -e MyEnv.json \
+            -r cli,junitfull \
+            --reporter-junitfull-export JUnitReportValidation.xml
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/JUnitReport*.xml'
+        testRunTitle: 'Publish test results'
+        searchFolder: 'automatedtesting/postman'
 
   - job: Performance
     displayName: 'Performance Tests'
@@ -216,28 +216,28 @@ stages:
           ls -lah stress-test-report/
           cat jmeter.log        
 
-#  - deployment: Functional
-#    displayName: 'Functional UI Tests'
-#    environment:
-#      name:  'TEST'
-#      resourceType: VirtualMachine
-#      tags: test, packer-created-vm
-#    strategy:
-#      runOnce:
-#        deploy:
-#          steps:
-#          
-#          - download: current
-#            artifact: drop-ui-tests
-#
-#          - task: Bash@3
-#
-#            displayName: 'Selenium Tests'
-#            inputs:
-#              targetType: 'inline'
-#              script: |
-#                #! /bin/bash
-#                echo 'Hello from a custom VM with pre-installed Selenium, Chromium-browser & Chromedriver!'
-#                source env/bin/activate
-#                export PATH=$PATH:`pwd` # add chromedriver executable to path
-#                python3 ../drop-ui-tests/functional_ui_test.py
+  - deployment: Functional
+    displayName: 'Functional UI Tests'
+    environment:
+      name:  'TEST'
+      resourceType: VirtualMachine
+      tags: test, packer-created-vm
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          
+          - download: current
+            artifact: drop-ui-tests
+
+          - task: Bash@3
+
+            displayName: 'Selenium Tests'
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                echo 'Hello from a custom VM with pre-installed Selenium, Chromium-browser & Chromedriver!'
+                source env/bin/activate
+                export PATH=$PATH:`pwd` # add chromedriver executable to path
+                python3 ../drop-ui-tests/functional_ui_test.py
