@@ -33,7 +33,7 @@ stages:
         script: |
           #! /bin/bash
           pwd
-          
+
       # Needed for Terraform VM deployment
 #    - task: InstallSSHKey@0
 #      inputs:
@@ -82,8 +82,8 @@ stages:
 #        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
 #
 #    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload FakeRestAPI Package'
-      artifact: drop-fakerestapi
+#      displayName: 'Upload FakeRestAPI Package'
+#      artifact: drop-fakerestapi
 #
 #    - publish: automatedtesting/selenium/functional_ui_test.py
 #      displayName: 'Upload UI Tests definition'
