@@ -10,7 +10,7 @@ This is a final project submission for [Udacity Azure DevOps Course](https://www
 
 #### Create the tasks that allow for Terraform to run and create the resources:
 
-Resource | Created via Terraform
+Resource | Created via TF
 :--- | :---:
 AppService | :white_check_mark:
 Network | :white_check_mark:

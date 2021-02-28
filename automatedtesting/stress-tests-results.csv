@@ -1,9 +1,0 @@
-timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
-1614149714105,10173,Get All Activities,200,OK,StressTestSuite 2-1,text,true,,3109,189,2,4,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,10173,0,196
-1614149714385,9893,Get All Activities,200,OK,StressTestSuite 2-2,text,true,,3109,189,2,4,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,9893,0,40
-1614150189296,255,Get All Activities,200,OK,StressTestSuite 2-1,text,true,,3109,189,1,2,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,255,0,205
-1614150189631,79,Get All Activities,200,OK,StressTestSuite 2-2,text,true,,3109,189,1,2,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,79,0,39
-1614151240895,227,Get All Activities,200,OK,StressTestSuite 2-1,text,true,,3109,189,1,2,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,226,0,178
-1614151241253,91,Get All Activities,200,OK,StressTestSuite 2-2,text,true,,3109,189,1,2,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,91,0,43
-1614167186555,409,Get All Activities,200,OK,StressTestSuite 2-2,text,true,,3109,189,2,4,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,409,0,229
-1614167186241,722,Get All Activities,200,OK,StressTestSuite 2-1,text,true,,3109,189,2,4,http://udacity-azure-course-project3-test-app-appservice.azurewebsites.net/api/Activities,722,0,542
