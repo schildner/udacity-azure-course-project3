@@ -19,7 +19,6 @@ variables:
   environmentName: 'test'
 
 stages:
-
 - stage: Build
   jobs:
   - job: Build
@@ -27,12 +26,20 @@ stages:
       vmImage: ubuntu-20.04
     steps:
 
-    # Needed for Terraform VM deployment
-#    - task: InstallSSHKey@0
+    - task: Bash@3
+      displayName: 'Install Postman & Newman'
       inputs:
-        knownHostsEntry: 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBByBaEbrJf+v9agEtM6g/LruTudlDznQ/Dca0BW/awH3/lX26tI/a6kDg90tOCOZIMotbavb3ABKJfkaDvFFGtI='
-        sshPublicKey: '$(udacityPubKey)'
-        sshKeySecureFile: 'udacity_id_rsa'
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          pwd
+          
+      # Needed for Terraform VM deployment
+#    - task: InstallSSHKey@0
+#      inputs:
+#        knownHostsEntry: 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBByBaEbrJf+v9agEtM6g/LruTudlDznQ/Dca0BW/awH3/lX26tI/a6kDg90tOCOZIMotbavb3ABKJfkaDvFFGtI='
+#        sshPublicKey: '$(udacityPubKey)'
+#        sshKeySecureFile: 'udacity_id_rsa'
 #
 #    - task: DownloadSecureFile@1
 #      name: udacity_public_key
@@ -120,39 +127,39 @@ stages:
 #          sudo snap install postman
 #          sudo npm install -g newman
 #          sudo npm install newman-reporter-junitfull -g      
-
-    - task: Bash@3
-      displayName: 'Regression Tests'
-      inputs:
-        workingDirectory: 'automatedtesting/postman'
-        targetType: 'inline'
-        script: |
-          #! /bin/bash
-
-          newman run RegressionTest.json \
-            -e MyEnv.json \
-            -r cli,junitfull \
-            --reporter-junitfull-export JUnitReportRegression.xml
-
-    - task: Bash@3
-      displayName: 'Data Validation Tests'
-      inputs:
-        workingDirectory: 'automatedtesting/postman'
-        targetType: 'inline'
-        script: |
-          #! /bin/bash
-
-          newman run ValidationTest.json \
-            -e MyEnv.json \
-            -r cli,junitfull \
-            --reporter-junitfull-export JUnitReportValidation.xml
-
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/JUnitReport*.xml'
-        testRunTitle: 'Publish test results'
-        searchFolder: 'automatedtesting/postman'
+#
+#    - task: Bash@3
+#      displayName: 'Regression Tests'
+#      inputs:
+#        workingDirectory: 'automatedtesting/postman'
+#        targetType: 'inline'
+#        script: |
+#          #! /bin/bash
+#
+#          newman run RegressionTest.json \
+#            -e MyEnv.json \
+#            -r cli,junitfull \
+#            --reporter-junitfull-export JUnitReportRegression.xml
+#
+#    - task: Bash@3
+#      displayName: 'Data Validation Tests'
+#      inputs:
+#        workingDirectory: 'automatedtesting/postman'
+#        targetType: 'inline'
+#        script: |
+#          #! /bin/bash
+#
+#          newman run ValidationTest.json \
+#            -e MyEnv.json \
+#            -r cli,junitfull \
+#            --reporter-junitfull-export JUnitReportValidation.xml
+#
+#    - task: PublishTestResults@2
+#      inputs:
+#        testResultsFormat: 'JUnit'
+#        testResultsFiles: '**/JUnitReport*.xml'
+#        testRunTitle: 'Publish test results'
+#        searchFolder: 'automatedtesting/postman'
 
   - job: Performance
     displayName: 'Performance Tests'
