@@ -48,12 +48,13 @@ Configure custom logging in Azure Monitor to ingest this log file. This may be d
 #### 2. Selenium
 
 - Create a UI Test Suite that adds all products to a cart, and then removes them.
-- Include print() commands throughout the tests so the actions of the tests can easily be determined. E.g. A login function might return which user is attempting to log in and whether or not the outcome was successful.
+- Include print() commands throughout the tests so the actions of the tests can easily be determined.
 - Deploy the UI Test Suite to the linux VM and execute the Test Suite via the CI/CD pipeline.
 
 #### 3. JMeter
 
-- Use the starter APIs to create two Test Suites. Using variables, reference a data set (csv file) in the test cases where the data will change.
+- Use the starter APIs to create two Test Suites.
+- Using variables, reference a data set (csv file) in the test cases where the data will change.
 - Create a Stress Test Suite
 - Create a Endurance Test Suite 
 - Generate the HTML report (non-CI/CD)
