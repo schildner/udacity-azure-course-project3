@@ -23,7 +23,7 @@ Linux VM (created using Packer -- using a Standard_B1s size for lowest cost) | :
 
 Test Type | Technology | Stage in CI/CD pipeline | Status
 :--- | :--- | :--- | :---:
-Integration | Postman | Test Stage | :white_check_mark:
+Integration | Postman | Test Stage - runs in Microsoft-hosted VM | :white_check_mark:
 Functional | Selenium | Test Stage - runs in custom linux VM | :white_check_mark:
 Performance | JMeter | Test Stage - runs against the AppService| :white_check_mark:
 
