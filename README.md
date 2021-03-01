@@ -24,7 +24,7 @@ Linux VM (created using Packer -- using a Standard_B1s size for lowest cost) | :
 Test Type | Technology | CI/CD Pipeline Execution | Status
 :--- | :--- | :--- | :---:
 Integration | Postman | Build Stage | :white_check_mark:
-UI | Selenium | Deployment Stage - runs in custom linux VM | :white_check_mark:
+Functional | Selenium | Deployment Stage - runs in custom linux VM | :white_check_mark:
 Performance | JMeter | Deployment Stage - runs against the AppService| :white_check_mark:
 
 ### 2. Azure Monitor
