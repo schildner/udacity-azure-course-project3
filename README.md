@@ -35,7 +35,7 @@ Configure an Action Group (email) | :white_check_mark:
 Configure an alert to trigger given a condition from the AppService. | :white_check_mark:
 The time the alert triggers and the time the Performance test is executed ought to be very close. | :white_check_mark:
 Direct the output of the Selenium Test Suite to a log file, and execute the Test Suite. | :white_check_mark:
-Configure custom logging in Azure Monitor to ingest this log file. This may be done non-CI/CD. |
+Configure custom logging in Azure Monitor to ingest this log file. This may be done non-CI/CD. | :white_check_mark:
 
 ### Test Suites Execution Details
 
