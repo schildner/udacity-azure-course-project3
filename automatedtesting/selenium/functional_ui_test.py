@@ -23,7 +23,7 @@ def functional_ui_test(user, password):
     # driver = webdriver.Chrome()
 
     # Test Login to the site
-    print ('Browser started successfully. Navigating to the demo page to login.')
+    logging.info('Browser started successfully. Navigating to the demo page to login.')
     driver.get('https://www.saucedemo.com/')
     driver.find_element_by_css_selector("input[id='user-name']").send_keys(user)
     driver.find_element_by_css_selector("input[id='password']").send_keys(password)
