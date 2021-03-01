@@ -1,7 +1,6 @@
 # #!/usr/bin/env python
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import logging
 
 # Start the browser and login with standard_user
@@ -12,10 +11,6 @@ def functional_ui_test(user, password):
     # --uncomment when running in Azure DevOps.
     options = ChromeOptions()
     options.add_argument("--headless") 
-
-    # enable browser logging
-    # desired_capabilities = DesiredCapabilities.CHROME
-    # desired_capabilities['goog:loggingPrefs'] = { 'browser':'ALL' }
 
     driver = webdriver.Chrome(options=options)
     
