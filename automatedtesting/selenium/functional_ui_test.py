@@ -5,7 +5,7 @@ import logging
 
 # Start the browser and login with standard_user
 def functional_ui_test(user, password):
-    logging.basicConfig(filename='selenium.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+    logging.basicConfig(filename='selenium.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
     logging.info('Starting the browser...')
     # --uncomment when running in Azure DevOps.
