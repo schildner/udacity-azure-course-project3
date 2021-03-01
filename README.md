@@ -8,9 +8,9 @@ This is a final project submission for [Udacity Azure DevOps Course](https://www
 
 ### 1. Create Azure DevOps CI/CD pipeline
 
-#### Create the tasks that allow for Terraform to run and create the resources:
+#### Create the tasks that allow for Terraform to run and create the resources below
 
-Resource | Created via TF
+Resource Created with Terraform | Status
 :--- | :---:
 AppService | :white_check_mark:
 Network | :white_check_mark:
@@ -21,11 +21,11 @@ Linux VM (created using Packer -- using a Standard_B1s size for lowest cost) | :
 
 #### Execute Test Suites
 
-Test Type | Technology | CI/CD Pipeline Execution | Status
+Test Type | Technology | Stage in CI/CD pipeline | Status
 :--- | :--- | :--- | :---:
-Integration | Postman | Build Stage | :white_check_mark:
-Functional | Selenium | Deployment Stage - runs in custom linux VM | :white_check_mark:
-Performance | JMeter | Deployment Stage - runs against the AppService| :white_check_mark:
+Integration | Postman | Test Stage | :white_check_mark:
+Functional | Selenium | Test Stage - runs in custom linux VM | :white_check_mark:
+Performance | JMeter | Test Stage - runs against the AppService| :white_check_mark:
 
 ### 2. Azure Monitor
 
