@@ -65,7 +65,7 @@ IMPORTANT: Since the AppService is using the Basic/Free plan, start small (2 use
 
 - Configure Authentication via Service Principal and Client Secret
 
-  Following [the guide](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret) we can set up the service principal allowing terraform to change resources in selected subscription scope.
+  Following [this guide](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret) we can set up the service principal allowing terraform to change resources in selected subscription scope.
 
   Executing `az ad sp create-for-rbac` command as described in the guide above the following output gets printed on console.
 
